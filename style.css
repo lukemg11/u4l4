@@ -1,0 +1,8 @@
+div{
+    text-align: center;
+    background-color: rgb(126, 26, 41);
+    grid-template-columns: 0.33fr 0.33fr;
+}
+body{
+    background-color: rgb(20, 12, 169);
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U4L3</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<script>
+async function getData() {
+const response = await fetch("Forestry_Tree_Points.csv");
+const data = await response.text();
+const rows = data.split("\n").slice(1,11);
+console.log(rows)
+let first=[];
+let second=[];
+rows.forEach((elem) => {
+          const row = elem.split(",");
+          const year = row[0];
+          const tempString = row[1];
+          const temp=parseFloat(tempString);
+          first.push(temp);
+          second.push(year);
+        });
+        return{
+            labels: first.map((p)=>p),
+            data: second.map((p)=>p),
+        };
+    
+    }
+async function makeChart(){
+    const data=await getData();
+    console.log(data.data)
+    console.log(data.labels)
+    const ctx = document.getElementById("lukeChart");
+new Chart(ctx,{
+    type: 'line',
+    data: {
+        labels: data.data,
+        datasets: [
+            {
+                label: "Favorite Trees in NYC by Object ID",
+                data: data.labels,
+                backgroundColor: '#7D22A5',
+                size: 15,
+            }
+        ],
+    },
+    options: {
+        maintainAspectRatio:false,
+    }
+})
+}
+makeChart();
+</script>
+<body>  
+    <div style="height: 800px;">
+        <canvas id="lukeChart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
